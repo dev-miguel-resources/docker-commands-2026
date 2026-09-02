@@ -33,6 +33,7 @@ docker create mysql:8.4.8
 docker rm vigorous_jang
 docker rm e647bd59ef1b
 docker rm -f vigorous_jang (forzado)
+docker kill mysqlserver
 ```
 
 ### 6. Crear un contenedor con nombre
@@ -94,4 +95,90 @@ docker --help
 
 ```
 \\wsl$
+```
+
+### 15. Para inspeccionar un contenedor
+
+```
+docker inspect mysqlserver
+```
+
+### 16. Para inspeccionar una imagen
+
+```
+docker inspect mysql:8.4.8
+```
+
+### 17. Para crear un contenedor con un volumen anónimo
+
+```
+docker run -d --name mysqlserver -p 3308:3306 -v /var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_USER=user -e MYSQL_PASSWORD=123 -e MYSQL_DATABASE=sqldbtest mysql:8.4.8
+```
+
+### 18. Para listar y filtrar los volúmenes
+
+```
+docker volume ls
+docker volume ls | findStr mysql (windows)
+docker volume ls | grep mysql (linux/mac)
+```
+
+### 19. Para eliminar un contenedor con un volumen anónimo
+
+```
+docker rm -fv mysqlserver
+```
+
+### 19. Para crear un contenedor con un volumen host
+
+```
+docker run -d --name mysqlserver -p :3308:3306 -v E:\docker_examples\docker\volumes\mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_USER=user -e MYSQL_PASSWORD=123 -e MYSQL_DATABASE=sqldbtest mysql:8.4.8
+```
+
+### 20. Para eliminar el contenido de una carpeta de volumen host
+
+```
+rmdir /s /q E:\docker_examples\docker\volumes\mysql (windows)
+rm -rf E:\docker_examples\docker\volumes\mysql (linux/mac)
+```
+
+### 20. Para crear un contenedor con un volumen nombrado
+
+```
+docker run -d --name mysqlserver -v vol-mysql-test-3:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_USER=user -e MYSQL_PASSWORD=123 -e MYSQL_DATABASE=sqldbtest mysql:8.4.8
+```
+
+### 21. Para eliminar un volumen nombrado
+
+```
+docker volume rm vol-mysql-test-3
+```
+
+### 22. Para inspeccionar un volumen nombrado o anónimo
+
+```
+docker inspect vol-mysql-test-3
+```
+
+### 23. Para crear un contenedor con asignación de puertos
+
+```
+docker run -d --name mysqlserver -p 3308:3306 -v vol-mysql-test-3:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_USER=user -e MYSQL_PASSWORD=123 -e MYSQL_DATABASE=sqldbtest mysql:8.4.8
+```
+
+### 24. Para remover volúmenes huerfanos (Nombrados y Anónimos)
+
+```
+docker volume prune
+docker volume prune -f
+```
+
+### 25. Script de pruebas para volúmenes
+
+```
+USE sqldbtest;
+
+CREATE TABLE IF NOT EXISTS `users` (
+ `id` INT auto_increment PRIMARY KEY
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 ```
