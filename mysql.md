@@ -182,3 +182,98 @@ CREATE TABLE IF NOT EXISTS `users` (
  `id` INT auto_increment PRIMARY KEY
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 ```
+
+### 26. Para crear una red
+
+```
+docker network create net-prueba-sql
+docker network create net-prueba-sql-2 -d bridge
+```
+
+### 27. Para listar y filtrar una red
+
+```
+docker network ls
+docker network ls | findStr sql (windows)
+docker network ls | grep sql (linux/mac) 
+```
+
+### 28. Para asociar un contenedor a una red
+
+```
+docker run -d --name mysqlserver -p 3308:3306 --network net-prueba-sql -v vol-mysql-test-3:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_USER=user -e MYSQL_PASSWORD=123 -e MYSQL_DATABASE=sqldbtest mysql:8.4.8
+```
+
+### 29. Para inspeccionar una red
+
+```
+docker network inspect net-prueba-sql
+```
+
+### 30. Para conectar una o más redes a un contenedor
+
+```
+docker network connect net-prueba-sql-2 mysqlserver
+```
+
+### 31. Para desconectar una o más redes asociada a un contenedor
+
+```
+docker network disconnect net-prueba-sql-2 mysqlserver
+```
+
+### 32. Para eliminar una o más redes
+
+```
+docker network rm net-prueba-sql-2
+```
+
+### 33. Definición de una red host
+
+```
+docker network create net-prueba-sql-3 -d host
+No se puede utilizar porque hace referencia a la red local fuera de docker
+```
+
+### 34. Definición de una red none
+
+```
+docker network create net-prueba-sql-3 -d none
+No se puede utilizar porque hace referencia al estado interno privada de las redes
+```
+
+### 35. Prueba de conectividad en una red
+
+```
+docker run -it --rm --network net-prueba-sql alpine ash
+# ping -c 4 mysqlserver
+```
+
+### 36. Prueba de conectividad 2 en una red
+
+```
+docker run -it --rm --network net-prueba-sql-2 alpine ash
+# ping -c 4 mysqlserver
+ping: bad address 'mysqlserver'
+```
+
+### 37. Prueba de conectividad 3 en una red, cuando los recursos pertenecen a la red bridge por default
+
+```
+docker run -d --name mysqlserver -p 3308:3306 -v vol-mysql-test-3:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_USER=user -e MYSQL_PASSWORD=123 -e MYSQL_DATABASE=sqldbtest mysql:8.4.8
+docker run -it --rm --network alpine ash
+# ping -c 4 172.17.0.2
+```
+
+### 37. Para remover redes huerfanas
+
+```
+docker network prune
+docker network prune -f
+```
+
+### 38. Para utilizar el modo interactivo
+
+```
+Pendiente para la próxima sesión.
+```
