@@ -1,0 +1,61 @@
+# opcional, autogenerado
+version: "3.8"
+
+services:
+  mysql-service:
+    image: mysql:8
+    container_name: mysqlcompose
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=1234
+      - MYSQL_DATABASE=sqldb
+    ports:
+      - "3310:3306"
+    networks:
+      - bdds-net
+    volumes:
+      - vol-bdd-mysql:/var/lib/mysql
+  
+  mysql-service-2:
+    image: mysql:8
+    container_name: mysqlserver2
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=1234
+      - MYSQL_DATABASE=sqldb2
+    ports:
+      - "3311:3306"
+    networks:
+      - bdds-net
+    volumes:
+      - vol-bdd-mysql-2:/var/lib/mysql
+  
+  mysql-service-3:
+    image: mysql:8
+    container_name: mysqlserver3
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=1234
+      - MYSQL_DATABASE=sqldb3
+    ports:
+      - "3312:3306"
+    networks:
+      - bdds-net
+    volumes:
+      - vol-bdd-mysql-3:/var/lib/mysql
+
+networks:
+  bdds-net:
+    name: bdds-net
+
+volumes:
+  vol-bdd-mysql:
+    name: vol-bdd-mysql
+  vol-bdd-mysql-2:
+    name: vol-bdd-mysql-2
+  vol-bdd-mysql-3:
+    name: vol-bdd-mysql-3
+

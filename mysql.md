@@ -238,7 +238,7 @@ No se puede utilizar porque hace referencia a la red local fuera de docker
 ### 34. Definición de una red none
 
 ```
-docker network create net-prueba-sql-3 -d none
+docker network create net-prueba-sql-3 -d null
 No se puede utilizar porque hace referencia al estado interno privada de las redes
 ```
 
@@ -275,5 +275,5 @@ docker network prune -f
 ### 38. Para utilizar el modo interactivo
 
 ```
-Pendiente para la próxima sesión.
+docker exec -it mysqlserver mysql -u root -p sqldbtest
 ```
