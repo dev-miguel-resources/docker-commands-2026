@@ -89,3 +89,16 @@ docker compose -f docker-compose-env.yml up -d --force-recreate
 ```
 docker compose -f docker-compose-env.yml down -v
 ```
+
+### 13. Para obtener el archivo compose desde la terminal
+
+```
+docker compose config (si tiene nombre nativo: compose o docker-compose)
+docker compose -f docker-compose-env.yml config (nombre personalizado)
+```
+
+### 14. Para lanzar un archivo compose con una especificación diferente al .env
+
+```
+docker compose --env-file .env.dev -f docker-compose.env.yml up -d
+```
